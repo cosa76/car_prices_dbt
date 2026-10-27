@@ -47,6 +47,20 @@ mf validate-configs
 
 Les 3 warnings « OSI document » sur les métriques cumulatives sont attendus : ils concernent un format d'export, pas le calcul.
 
+## Échantillon CI
+
+`car_prices.csv` (88 Mo) n'est pas versionné. Il est attendu dans le dossier parent (`var('raw_csv_path')`).
+La CI tourne sur `ci/car_prices_sample.csv` : 5 657 lignes, générées de façon déterministe par `scripts/make_ci_sample.py`.
+
+L'échantillon garde tous les cas limites des règles métier : les 26 lignes décalées, des prix manquants ou < 500 $, les dates illisibles, des VIN vendus plusieurs fois, des odomètres sentinelles. Le reste est un fond de lignes ordinaires, trié par hash.
+
+```powershell
+python scripts/make_ci_sample.py                   # régénère depuis ../car_prices.csv
+dbt build --vars "{raw_csv_path: ci/car_prices_sample.csv}"
+```
+
+Il teste la logique et les contrats, pas les volumes. Les chiffres obtenus sur l'échantillon n'ont aucune valeur métier.
+
 ## Règles métier (int_vehicle_sales_deduped)
 
 1. Lignes décalées exclues (`state` contient un VIN) : 26 lignes dans la source.
