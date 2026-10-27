@@ -1,0 +1,59 @@
+version: 2
+
+semantic_models:
+  - name: vehicle_sales
+    description: Fait des ventes, une ligne par vente gouvernée.
+    model: ref('fct_vehicle_sales')
+    defaults:
+      agg_time_dimension: sale_date
+
+    entities:
+      - name: sale
+        type: primary
+        expr: sale_id
+      - name: vehicle_model
+        type: foreign
+        expr: vehicle_model_id
+      - name: seller
+        type: foreign
+        expr: seller_id
+      - name: state
+        type: foreign
+        expr: state_code
+
+    dimensions:
+      - name: sale_date
+        description: Date de la vente. Seule dimension temps exposée.
+        type: time
+        type_params:
+          time_granularity: day
+      - name: transmission
+        type: categorical
+      - name: condition_scale
+        description: Échelle d'origine de la note d'état (1-5 ou 10-50).
+        type: categorical
+
+    measures:
+      - name: revenue
+        description: Somme des prix de vente.
+        agg: sum
+        expr: selling_price
+      - name: sales_count
+        description: Nombre de ventes.
+        agg: count
+        expr: sale_id
+      - name: mmr_total
+        description: Somme des cotes MMR.
+        agg: sum
+        expr: mmr
+      - name: below_mmr_count
+        description: Ventes conclues sous la cote MMR.
+        agg: sum
+        expr: is_below_mmr
+      - name: mmr_known_count
+        description: Ventes avec une cote MMR > 0.
+        agg: sum
+        expr: case when mmr > 0 then 1 else 0 end
+      - name: odometer_avg
+        agg: average
+        expr: case when not is_odometer_sentinel then odometer end

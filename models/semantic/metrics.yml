@@ -1,0 +1,118 @@
+version: 2
+
+metrics:
+  # --- Métriques de base -------------------------------------------------
+  - name: revenue
+    label: Chiffre d'affaires
+    description: Somme des prix de vente, règles gouvernées appliquées.
+    type: simple
+    type_params:
+      measure: revenue
+
+  - name: sales_count
+    label: Nombre de ventes
+    type: simple
+    type_params:
+      measure: sales_count
+
+  - name: mmr_total
+    label: Cote MMR totale
+    type: simple
+    type_params:
+      measure: mmr_total
+
+  - name: below_mmr_count
+    label: Ventes sous cote MMR
+    type: simple
+    type_params:
+      measure: below_mmr_count
+
+  - name: mmr_known_count
+    label: Ventes avec cote MMR connue
+    type: simple
+    type_params:
+      measure: mmr_known_count
+
+  - name: avg_odometer
+    label: Kilométrage moyen (miles)
+    description: Hors valeurs sentinelles 999999.
+    type: simple
+    type_params:
+      measure: odometer_avg
+
+  # --- Ratios et dérivées ------------------------------------------------
+  - name: avg_selling_price
+    label: Prix de vente moyen
+    type: ratio
+    type_params:
+      numerator: revenue
+      denominator: sales_count
+
+  - name: below_mmr_rate
+    label: Taux de ventes sous cote MMR
+    description: Part des ventes (avec MMR connue) conclues sous la cote MMR.
+    type: ratio
+    type_params:
+      numerator: below_mmr_count
+      denominator: mmr_known_count
+
+  - name: price_vs_mmr
+    label: Écart prix vendu vs MMR
+    description: revenue / mmr_total - 1. Négatif = vendu sous la cote en moyenne.
+    type: derived
+    type_params:
+      expr: revenue / mmr_total - 1
+      metrics:
+        - name: revenue
+        - name: mmr_total
+
+  # --- Cumulatives -------------------------------------------------------
+  - name: revenue_cumulative
+    label: CA cumulé depuis le début
+    description: Valeur en fin de période quand on agrège au mois ou à l'année.
+    type: cumulative
+    type_params:
+      measure: revenue
+      cumulative_type_params:
+        period_agg: last
+
+  - name: revenue_mtd
+    label: CA du mois à date
+    type: cumulative
+    type_params:
+      measure: revenue
+      cumulative_type_params:
+        grain_to_date: month
+        period_agg: last
+
+  - name: sales_count_7d
+    label: Ventes sur 7 jours glissants
+    type: cumulative
+    type_params:
+      measure: sales_count
+      cumulative_type_params:
+        window: 7 days
+
+  # --- Comparaisons dans le temps ----------------------------------------
+  - name: revenue_prev_month
+    label: CA du mois précédent
+    type: derived
+    type_params:
+      expr: revenue
+      metrics:
+        - name: revenue
+          offset_window: 1 month
+
+  - name: revenue_mom_growth
+    label: Croissance du CA mois sur mois
+    description: >
+      (revenue - revenue du mois précédent) / revenue du mois précédent.
+      Attention : la source a des mois quasi vides (ex. avril 2015), la croissance y est sans valeur.
+    type: derived
+    type_params:
+      expr: (revenue - revenue_prev) / revenue_prev
+      metrics:
+        - name: revenue
+        - name: revenue
+          offset_window: 1 month
+          alias: revenue_prev

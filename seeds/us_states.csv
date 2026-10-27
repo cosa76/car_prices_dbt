@@ -1,0 +1,39 @@
+state_code,state_name,country,region
+al,Alabama,US,South
+az,Arizona,US,West
+ca,California,US,West
+co,Colorado,US,West
+fl,Florida,US,South
+ga,Georgia,US,South
+hi,Hawaii,US,West
+il,Illinois,US,Midwest
+in,Indiana,US,Midwest
+la,Louisiana,US,South
+ma,Massachusetts,US,Northeast
+md,Maryland,US,South
+mi,Michigan,US,Midwest
+mn,Minnesota,US,Midwest
+mo,Missouri,US,Midwest
+ms,Mississippi,US,South
+nc,North Carolina,US,South
+ne,Nebraska,US,Midwest
+nj,New Jersey,US,Northeast
+nm,New Mexico,US,West
+nv,Nevada,US,West
+ny,New York,US,Northeast
+oh,Ohio,US,Midwest
+ok,Oklahoma,US,South
+or,Oregon,US,West
+pa,Pennsylvania,US,Northeast
+sc,South Carolina,US,South
+tn,Tennessee,US,South
+tx,Texas,US,South
+ut,Utah,US,West
+va,Virginia,US,South
+wa,Washington,US,West
+wi,Wisconsin,US,Midwest
+pr,Puerto Rico,US,Territory
+ab,Alberta,CA,Canada
+on,Ontario,CA,Canada
+qc,Quebec,CA,Canada
+ns,Nova Scotia,CA,Canada

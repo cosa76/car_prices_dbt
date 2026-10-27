@@ -1,0 +1,24 @@
+version: 2
+
+saved_queries:
+  - name: monthly_kpis
+    description: KPIs mensuels de référence.
+    query_params:
+      metrics: [revenue, sales_count, avg_selling_price, below_mmr_rate, revenue_mom_growth]
+      group_by:
+        - TimeDimension('metric_time', 'month')
+
+  - name: below_mmr_by_body_type
+    description: L'exemple réaliste du schéma. Lire avec sales_count, des carrosseries ont très peu de ventes.
+    query_params:
+      metrics: [below_mmr_rate, sales_count]
+      group_by:
+        - Dimension('vehicle_model__body_type')
+
+  - name: revenue_by_region_and_seller_type
+    description: CA et prix moyen par région et type de vendeur.
+    query_params:
+      metrics: [revenue, sales_count, avg_selling_price]
+      group_by:
+        - Dimension('state__region')
+        - Dimension('seller__seller_type')

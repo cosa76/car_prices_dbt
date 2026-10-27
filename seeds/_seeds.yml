@@ -1,0 +1,23 @@
+version: 2
+seeds:
+  - name: make_aliases
+    description: Table de correspondance gouvernée des alias de marque (après passage en minuscules).
+    columns:
+      - name: raw_make
+        data_tests: [unique, not_null]
+      - name: make
+        data_tests: [not_null]
+
+  - name: us_states
+    description: Codes état présents dans la source (US, Porto Rico, 4 provinces canadiennes). Régions = census regions US.
+    columns:
+      - name: state_code
+        data_tests: [unique, not_null]
+
+  - name: seller_type_rules
+    description: >
+      Règles HEURISTIQUES de classification des vendeurs par mot-clé (première règle qui matche, par priorité).
+      Choix de démo, à valider avec le métier. Vendeur sans match = 'other'.
+    columns:
+      - name: priority
+        data_tests: [unique, not_null]

@@ -1,0 +1,8 @@
+version: 2
+sources:
+  - name: raw
+    description: Fichier brut car_prices.csv (ventes de véhicules d'occasion, Manheim).
+    tables:
+      - name: car_prices
+        meta:
+          external_location: "read_csv('{{ var('raw_csv_path') }}', header=true, all_varchar=true)"

@@ -1,0 +1,21 @@
+priority,pattern,seller_type
+1,hertz,rental
+2,avis,rental
+3,enterprise,rental
+4,budget,rental
+5,dtg operations,rental
+6,u-haul,rental
+7,credit,finance_lease
+8,financ,finance_lease
+9,lease,finance_lease
+10,bank,finance_lease
+11,capital,finance_lease
+12,acceptance,finance_lease
+13,santander,finance_lease
+14,wells fargo,finance_lease
+15,remarketing,finance_lease
+16,tdaf,finance_lease
+17,world omni,finance_lease
+18,fleet,fleet
+19,motor america,manufacturer
+20,north america,manufacturer

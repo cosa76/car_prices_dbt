@@ -1,0 +1,54 @@
+version: 2
+
+semantic_models:
+  - name: vehicle_models
+    description: Configurations véhicule. Jointure many-to-one depuis vehicle_sales.
+    model: ref('dim_vehicle_model')
+    entities:
+      - name: vehicle_model
+        type: primary
+        expr: vehicle_model_id
+    dimensions:
+      - name: make
+        description: Marque normalisée (minuscules + seed make_aliases).
+        type: categorical
+      - name: model
+        type: categorical
+      - name: trim_level
+        type: categorical
+      - name: body_type
+        description: Carrosserie en minuscules.
+        type: categorical
+      - name: model_year
+        description: Année-modèle du véhicule. Ce n'est PAS l'année de vente.
+        type: categorical
+
+  - name: sellers
+    description: Vendeurs.
+    model: ref('dim_seller')
+    entities:
+      - name: seller
+        type: primary
+        expr: seller_id
+    dimensions:
+      - name: seller_name
+        type: categorical
+      - name: seller_type
+        description: Type heuristique (rental, finance_lease, fleet, manufacturer, other). Voir seed seller_type_rules.
+        type: categorical
+
+  - name: states
+    description: États et provinces.
+    model: ref('dim_state')
+    entities:
+      - name: state
+        type: primary
+        expr: state_code
+    dimensions:
+      - name: state_name
+        type: categorical
+      - name: country
+        type: categorical
+      - name: region
+        description: Census region US, 'Territory' pour Porto Rico, 'Canada' pour les provinces.
+        type: categorical

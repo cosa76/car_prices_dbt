@@ -1,0 +1,7 @@
+car_prices:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: car_prices.duckdb
+      threads: 4

@@ -1,0 +1,15 @@
+version: 2
+models:
+  - name: stg_car_prices
+    description: Une ligne par ligne du CSV. Typage, normalisation de la casse, alias de marque, flags qualité.
+    columns:
+      - name: is_shifted_row
+        description: Vrai quand les colonnes sont décalées (state contient un VIN). Lignes inexploitables.
+      - name: condition_scale
+        description: >
+          La source mélange deux échelles (1-5 et 11-49). Non résolu volontairement :
+          la règle de conversion doit être validée avec le métier.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['1-5', '10-50', 'unknown']

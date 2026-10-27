@@ -1,0 +1,7 @@
+version: 2
+models:
+  - name: int_vehicle_sales_deduped
+    description: Ventes après règles métier, avec clés de substitution vers les dimensions.
+    columns:
+      - name: vin
+        data_tests: [unique, not_null]
