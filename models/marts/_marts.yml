@@ -52,7 +52,7 @@ models:
         data_tests:
           - accepted_values:
               arguments:
-                values: ['rental', 'finance_lease', 'fleet', 'manufacturer', 'other']
+                values: ['rental', 'finance_lease', 'fleet', 'manufacturer']
 
   - name: dim_state
     description: Une ligne par code état, avec pays et région.
